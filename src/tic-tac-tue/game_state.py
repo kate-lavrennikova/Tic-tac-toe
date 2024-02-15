@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, ValidationError
 from typing import List, Optional
+from colorama import Fore, Style
 
 class CellIsFilledException(Exception):
     def __init__(self, coordinates):
@@ -21,7 +22,6 @@ class GameState(BaseModel, validate_assignment=True):
     win: bool = Field(default=False)
     filled_cells_count: int = Field(default=0)
     is_x: bool = Field(default=True)
-
 
 
     def check_if_win(self):
@@ -69,11 +69,23 @@ class GameState(BaseModel, validate_assignment=True):
 
 
     def check_row(self, i):
-        return self.moves[i][0] == self.moves[i][1] == self.moves[i][2] != None
+        if self.moves[i][0] == self.moves[i][1] == self.moves[i][2] != None:
+            self.moves[i][0], self.moves[i][1], self.moves[i][2] = [f"{Fore.GREEN}{self.moves[i][0]}{Style.RESET_ALL}"]*3
+            return True
+        else: return False
+
 
     def check_column(self, j):
-        return self.moves[0][j] == self.moves[1][j] == self.moves[2][j] != None
+        if self.moves[0][j] == self.moves[1][j] == self.moves[2][j] != None:
+            self.moves[0][j], self.moves[1][j], self.moves[2][j] = [f"{Fore.GREEN}{self.moves[0][j]}{Style.RESET_ALL}"]*3
+            return True
+        else: return False
 
     def check_diagonals(self):
-        return self.moves[0][0] == self.moves[1][1] == self.moves[2][2] != None or \
-        self.moves[0][2] == self.moves[1][1] == self.moves[2][0] != None
+        if self.moves[0][0] == self.moves[1][1] == self.moves[2][2] != None:
+            self.moves[0][0], self.moves[1][1], self.moves[2][2] = [f"{Fore.GREEN}{self.moves[0][0]}{Style.RESET_ALL}"]*3
+            return True
+        if self.moves[0][2] == self.moves[1][1] == self.moves[2][0] != None:
+            self.moves[0][2], self.moves[1][1], self.moves[2][0] = [f"{Fore.GREEN}{self.moves[0][2]}{Style.RESET_ALL}"]*3
+            return True
+        else: return False

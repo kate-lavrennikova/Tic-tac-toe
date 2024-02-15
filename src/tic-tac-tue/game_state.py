@@ -15,6 +15,7 @@ class GameState(BaseModel):
     end_of_game: bool = Field(default=False)
     win: bool = Field(default=False)
     filled_cells_count: int = Field(default=0)
+    is_x: bool = Field(default=True)
 
 
 
@@ -34,7 +35,8 @@ class GameState(BaseModel):
 
     
     def update(self):
-        content = "x" if self.is_user_move else "o"
+        content = "x" if self.is_x else "o"
+        self.is_x = not self.is_x
         self.moves[self.target_x][self.target_y] = content
         self.filled_cells_count += 1
         self.check_if_win()

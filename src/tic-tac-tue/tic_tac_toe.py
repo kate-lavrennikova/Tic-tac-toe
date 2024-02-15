@@ -7,11 +7,9 @@ class TicTacToe():
         self.current_state = GameState()
 
     def start(self):
-        if not self.is_user_move():
-            self.make_move()
-        self.draw_playground()
+        if self.current_state.is_user_move:
+            self.draw_playground()
         while not self.is_over():
-            self.ask_user()
             self.make_move()
             self.draw_playground()
 
@@ -38,9 +36,6 @@ class TicTacToe():
         else: print("I am first!")
         self.current_state.is_user_move = is_user_first
     
-    def is_user_move(self):
-        return self.current_state.is_user_move
-    
     def is_over(self):
         return self.current_state.end_of_game
     
@@ -52,16 +47,8 @@ class TicTacToe():
                 print("You win!") 
             else: print("I win!")
 
-    def ask_user(self):
-        coordinates = input('Enter coordinates of your move in format "x y": ').split(" ")
-        self.current_state.target_x = int(coordinates[0])
-        self.current_state.target_y = int(coordinates[1])
-        self.current_state.is_user_move = True
-        self.current_state.update()
 
-    def make_move(self):
-        if self.is_over():
-            return
+    def calculate_coordinates(self):
         x = None
         y = None
         x_options = set([0,1,2])
@@ -75,14 +62,17 @@ class TicTacToe():
                 y_options.remove(y)
                 if self.current_state.cell_is_empty(x, y):
                     coordinates_found = True
-        self.current_state.target_x = x
-        self.current_state.target_y = y
-        self.current_state.is_user_move = False
-        self.current_state.update()
+        return f"{x} {y}"
 
-
-
-    
-    def coordinates_validated(self, coordinates):
-        return False if self.current_state.moves[int(coordinates[0])][int(coordinates[1])] != None else True
+    def make_move(self):
+        if self.is_over():
+            return
+        if self.current_state.is_user_move:
+            updated_successfully = False
+            while(not updated_successfully):
+                coordinates = input('Your turn! Enter coordinates of your move in format "x y": ')
+                updated_successfully = self.current_state.update(coordinates)
+        else: 
+            print("My turn!")
+            self.current_state.update(self.calculate_coordinates())
     

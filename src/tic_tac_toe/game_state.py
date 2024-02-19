@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, ValidationError
-from typing import List, Optional
+from typing import List, Optional, Any
 from colorama import Fore, Style
 
 class CellIsFilledException(Exception):
@@ -12,12 +12,12 @@ class GameState(BaseModel, validate_assignment=True):
     target_x: int = Field(ge=0, lt=3, default=None)
     target_y: int = Field(ge=0, lt=3, default=None)
     is_user_move: bool = Field(default=False)
-    moves: List[List[str]] = Field(
+    moves: List[List[Any]] = Field(
         default = [
             [None, None, None],
             [None, None, None],
             [None, None, None]
-            ])
+            ], validate_default=True)
     end_of_game: bool = Field(default=False)
     win: bool = Field(default=False)
     filled_cells_count: int = Field(default=0)

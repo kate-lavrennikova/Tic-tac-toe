@@ -1,3 +1,5 @@
-.vscode/
+.pytest_cache/
 venv/
+__pycache__
+.vscode/
 src/tic_tac_toe.egg-info/

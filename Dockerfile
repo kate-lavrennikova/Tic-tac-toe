@@ -12,5 +12,6 @@ RUN python -m pip install --upgrade pip && \
     python -m pip install --no-cache-dir -c constraints.txt ".[dev]"
 COPY --chown=kate src/ src/
 COPY --chown=kate test/ test/
-RUN python -m pip install . -c constraints.txt
+RUN python -m pip install . -c constraints.txt && \
+    python -m pytest test/
 ENTRYPOINT ["python", "./src/tic_tac_toe/main.py"]

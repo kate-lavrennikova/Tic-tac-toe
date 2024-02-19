@@ -3,9 +3,14 @@ requires = ["setuptools>=67.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tic-tac-tue"
+name = "tic_tac_toe"
 version = "1.0.0"
 dependencies = [
     "pydantic",
     "colorama"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
 ]

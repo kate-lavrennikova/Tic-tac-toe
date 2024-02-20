@@ -1,4 +1,4 @@
-from tic_tac_toe import TicTacToe
+from tic_tac_toe.game import TicTacToe
 
 game = TicTacToe()
 game.who_is_first_random()

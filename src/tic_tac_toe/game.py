@@ -1,4 +1,4 @@
-from game_state import GameState
+from tic_tac_toe.game_state import GameState
 import random
 class TicTacToe():
     current_state: GameState
